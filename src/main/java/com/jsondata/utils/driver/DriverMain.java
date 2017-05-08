@@ -2,8 +2,6 @@ package com.jsondata.utils.driver;
 
 import com.jsondata.utils.reader.Configuration;
 import com.jsondata.utils.reader.FileLoader;
-import com.jsondata.utils.reader.FileTemplate;
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -30,12 +28,17 @@ public class DriverMain {
             e.printStackTrace();
         }
         Configuration data = Configuration.getInstance(confObject);
-
-        JSONArray objArr = new JSONArray();
-        for(int i=0; i<data.getNoRecords(); i++){
-            FileTemplate temp = new FileTemplate();
-            temp.fileLoad(data,fileObject, objArr);
+        for(int i=0; i<data.getNoThreads(); i++){
+            String nam = "Thread-"+i;
+            ThreadTest T = new ThreadTest(nam, data, fileObject);
+            T.start();
         }
+
+//        JSONArray objArr = new JSONArray();
+//        for(int i=0; i<data.getNoRecords(); i++){
+//            FileTemplate temp = new FileTemplate();
+//            temp.fileLoad(data,fileObject, objArr);
+//        }
 
     }
 }
